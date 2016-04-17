@@ -3,6 +3,12 @@
 const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
+var http = require('http');
+var request = require('request');
+var fs = require("fs");
+const ipcMain = require('electron').ipcMain;
+
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,13 +23,30 @@ app.on('window-all-closed', function() {
   }
 });
   app.on('uncaughtException', function (error) {
-      print(error);
+      console.log(error);
   });
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
+
+
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
+
+  request('https://calm-bastion-50727.herokuapp.com', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(body); // Show the HTML for the Modulus homepage.
+        var jsondata = JSON.parse(body);
+        var lat = jsondata["lat"];
+        var lng = jsondata["long"];
+        console.log(lat);
+        mainWindow.webContents.send('lat',lat);
+        mainWindow.webContents.send('lng',lng);
+        // ipcMain.send('lat',lat);
+        // ipcMain.send('lng',lng);
+    }
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
@@ -38,4 +61,5 @@ app.on('ready', function() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
 });

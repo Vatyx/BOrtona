@@ -3,9 +3,20 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <script type="text/javascript">
+      const ipcRenderer = require('electron').ipcRenderer;
+      ipcRenderer.on('lat', function(event, arg) {
+        document.getElementById("lat").innerText = arg;
+      });
+      ipcRenderer.on('lng', function(event, arg) {
+        document.getElementById("lng").innerText = arg;
+      });
+    </script>
   </head>
   <body>
     <h1>Hello World!</h1>
     Dhanju, you are about as much use as a condom machine in the Vatican. <br> <br>Also, just so you know, this is chrome version <script>document.write(process.versions.chrome)</script>
+    <p id="lat"></p>
+    <p id="lng"></p>
   </body>
 </html>
