@@ -2,21 +2,6 @@
 <html>
     <head>
 		    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-        <script>
-  			window.setInterval(function() { $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://calm-bastion-50727.herokuapp.com') + '&callback=?', function(data){
-  				var a = JSON.parse(data.contents);
-  				console.log(a.lat);
-
-  				navigator.geolocation.getCurrentPosition = function(success, failure) {
-  					success({ coords: {
-  						latitude: a.lat,
-  						longitude: a.long,
-
-  					}, timestamp: Date.now() });
-  				}
-
-  			}); }, 500);
-        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>ffwdme Demo Page</title>
 

@@ -14,6 +14,28 @@ function init() {
     routing: 'GraphHopper',
     graphHopper: {
       apiKey: CREDENTIALS.graphHopper
+    },
+    geoProvider: {
+      getCurrentPosition: function(success, failure) {
+        $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://calm-bastion-50727.herokuapp.com') + '&callback=?', function(data){
+          var a = JSON.parse(data.contents);
+          success({ coords: {
+            latitude: a.lat,
+          longitude: a.long,
+
+          }, timestamp: Date.now() });
+        });
+      },
+      watchPosition: function(success, failure, options) {
+        $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://calm-bastion-50727.herokuapp.com') + '&callback=?', function(data){
+          var a = JSON.parse(data.contents);
+          success({ coords: {
+            latitude: a.lat,
+          longitude: a.long,
+
+          }, timestamp: Date.now() });
+        });
+      }
     }
   });
 
